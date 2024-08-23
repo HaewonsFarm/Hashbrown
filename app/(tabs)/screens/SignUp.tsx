@@ -14,7 +14,7 @@ import {
     Modal,
     GestureResponderEvent
 } from "react-native";
-import { COLORS, SIZES, FONTS, icons, images } from "../constants";
+import { COLORS, SIZES, FONTS, icons, images } from "../../../constants";
 import LinearGradient from "react-native-linear-gradient";
 
 // 타입 선언
@@ -321,25 +321,28 @@ const SignUp: React.FC<SignUpProps> = ({ navigation }) => {
         );
     }
     return (
-        <KeyboardAvoidingView
-            behavior={Platform.OS === "ios" ? "padding" : undefined}
-            style={{ flex: 1 }}
-        >
-            <LinearGradient
-                colors={[COLORS.lime, COLORS.emerald]}
-                style={{ flex: 1 }}
-            >
-                <ScrollView>
-                    {renderHeader()}
-                    {renderLogo()}
-                    {renderForm()}
-                    {renderButton()}
+      <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : undefined}
+          style={{ flex: 1 }}
+      >
+        {/* 여기서 자꾸 에러가 난다. 다른 폴더에서 시도했을 땐 안 떴는데 대체 왜 뜨는지 모르겠다. */}
+        {/*
+          <LinearGradient
+              colors={[COLORS.lime, COLORS.emerald]}
+              style={{ flex: 1 }}
+          >
+              <ScrollView>
+                  {renderHeader()}
+                  {renderLogo()}
+                  {renderForm()}
+                  {renderButton()}
 
-                </ScrollView>
+              </ScrollView>
 
-            </LinearGradient>
-            {renderAreaCodeModal()}
-        </KeyboardAvoidingView>
+          </LinearGradient>
+          */}
+          {renderAreaCodeModal()}
+      </KeyboardAvoidingView>
     );
 };
 

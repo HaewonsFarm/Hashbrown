@@ -1,18 +1,10 @@
-import wallieLogo from"../assets/images/wallie-logo.png";
-import banner from "../assets/images/banner.png";
-import promoBanner from"../assets/images/promo-banner.png";import focus from"../assets/images/focus.png";
-
-// Dummy
-import usFlag from "../assets/images/us-flag.jpg";
-import InFlag from "../assets/images/IN.png";
-
 export default {
-    wallieLogo: require("../assets/images/wallie-logo.png"),
-    banner,
-    promoBanner,
-    focus: require("..assets/images/focus.png"),
+  wallieLogo: require("../assets/images/wallie-logo.png"),
+  banner: require("../assets/images/banner.png"),
+  promoBanner: require("../assets/images/promo-banner.png"),
+  focus: require("../assets/images/focus.png"),
 
-    // Dummy
-    usFlag,
-    InFlag
+  // Dummy
+  usFlag: require("../assets/images/us-flag.jpg"),
+  InFlag: require("../assets/images/IN.png"),
 }

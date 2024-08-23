@@ -1,3 +1,4 @@
+// Home Screen
 import React from "react";
 import {
     View,
@@ -9,7 +10,7 @@ import {
     StatusBar,
     ImageSourcePropType
 } from "react-native";
-import { COLORS, SIZES, icons, images, FONTS } from "../constants";
+import { COLORS, SIZES, icons, images, FONTS } from "../../../constants";
 
 type Feature = {
     id: number;
