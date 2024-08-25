@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, TouchableOpacity, Image, StatusBar } from "react-native";
 import { RNCamera, BarCodeReadEvent } from "react-native-camera";
-import { COLORS, SIZES, FONTS, icons, images } from "../../constants";
+import { COLORS, SIZES, FONTS, icons, images } from "../../../constants";
 
 type ScanProps = {
     navigation: any;

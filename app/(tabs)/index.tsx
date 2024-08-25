@@ -8,7 +8,7 @@ import {
     FlatList,
     StatusBar,
     ImageSourcePropType,
-    StyleSheet
+    StyleSheet,
 } from "react-native";
 import { COLORS, SIZES, icons, images, FONTS } from "../../constants";
 

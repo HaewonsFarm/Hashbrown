@@ -14,7 +14,7 @@ import {
     Modal,
     GestureResponderEvent
 } from "react-native";
-import { COLORS, SIZES, FONTS, icons, images } from "../../constants";
+import { COLORS, SIZES, FONTS, icons, images } from "../../../constants";
 import LinearGradient from "react-native-linear-gradient";
 
 // 타입 선언

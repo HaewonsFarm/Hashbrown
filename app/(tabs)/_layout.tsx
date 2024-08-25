@@ -97,7 +97,7 @@ export default function Layout() {
       }}
     >
       <Tabs.Screen
-        name="index"  // home
+        name= "screens/Home"  // home
         options={{
           tabBarIcon: ({ focused }) => (
             <Image
@@ -114,7 +114,7 @@ export default function Layout() {
         }}
       />
       <Tabs.Screen
-        name="Scan"  // No route named "Scan" exists in nested chileren: ["explore", "index", "navigation/tabs", "screens/Home", "screens/Scan", "screens/SignUp"]  error.
+        name="screens/Scan"
         options={{
           tabBarIcon: ({ focused }) => (
             <Image
@@ -131,7 +131,7 @@ export default function Layout() {
         }}
       />
       <Tabs.Screen
-        name="SignUp"  // user
+        name="screens/SignUp"  // user
         options={{
           tabBarIcon: ({ focused }) => (
             <Image
