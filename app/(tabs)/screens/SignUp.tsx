@@ -325,8 +325,6 @@ const SignUp: React.FC<SignUpProps> = ({ navigation }) => {
           behavior={Platform.OS === "ios" ? "padding" : undefined}
           style={{ flex: 1 }}
       >
-        {/* 여기서 자꾸 에러가 난다. 다른 폴더에서 시도했을 땐 안 떴는데 대체 왜 뜨는지 모르겠다. */}
-        {/*
           <LinearGradient
               colors={[COLORS.lime, COLORS.emerald]}
               style={{ flex: 1 }}
@@ -340,7 +338,6 @@ const SignUp: React.FC<SignUpProps> = ({ navigation }) => {
               </ScrollView>
 
           </LinearGradient>
-          */}
           {renderAreaCodeModal()}
       </KeyboardAvoidingView>
     );

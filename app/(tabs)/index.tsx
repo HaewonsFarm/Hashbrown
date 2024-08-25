@@ -115,10 +115,10 @@ const Home: React.FC = () => {
     ];
 
     const renderHeader = () => (
-        <View style={{ flexDirection: 'row', marginVertical: SIZES.padding * 2 }}>
+        <View style={{ flexDirection: 'row', marginVertical: SIZES.padding * 3 }}>
             <View style={{ flex: 1 }}>
                 <Text style={{ ...FONTS.h1, color: COLORS.black }}>Hello!</Text>
-                <Text style={{ ...FONTS.body2, color: COLORS.gray }}>ByWanky</Text>
+                <Text style={{ ...FONTS.body2, color: COLORS.gray }}>Hashbrown</Text>
             </View>
             <View style={{ alignContent: 'center', alignItems: 'center' }}>
                 <TouchableOpacity style={styles.notificationButton}>
