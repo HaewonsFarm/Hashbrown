@@ -10,7 +10,7 @@ import {
     StatusBar,
     ImageSourcePropType
 } from "react-native";
-import { COLORS, SIZES, icons, images, FONTS } from "../../../constants";
+import { COLORS, SIZES, icons, images, FONTS } from "../../constants";
 
 type Feature = {
     id: number;
@@ -122,7 +122,7 @@ const Home: React.FC = () => {
             <View style={{ flexDirection: 'row', marginVertical: SIZES.padding * 2 }}>
                 <View style={{ flex: 1 }}>
                     <Text style={{ ...FONTS.h1, color: COLORS.black }}>Hello!</Text>
-                    <Text style={{ ...FONTS.body2, color: COLORS.gray }}>ByWanky</Text>
+                    <Text style={{ ...FONTS.body2, color: COLORS.gray }}>Hashbrown</Text>
                 </View>
                 <View style={{ alignContent: 'center', alignItems: 'center' }}>
                     <TouchableOpacity style={{

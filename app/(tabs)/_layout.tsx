@@ -12,6 +12,7 @@ import Svg, { Path } from "react-native-svg";
 import { isIphoneX } from "react-native-iphone-x-helper";
 import { COLORS, icons } from "../../constants";
 
+
 // 커스텀버튼 타입 선언
 type TabBarCustomButtonProps = {
   children: React.ReactNode;
@@ -96,7 +97,7 @@ export default function Layout() {
       }}
     >
       <Tabs.Screen
-        name="home"
+        name="index"  // home
         options={{
           tabBarIcon: ({ focused }) => (
             <Image
@@ -113,7 +114,7 @@ export default function Layout() {
         }}
       />
       <Tabs.Screen
-        name="scan"
+        name="Scan"  // No route named "Scan" exists in nested chileren: ["explore", "index", "navigation/tabs", "screens/Home", "screens/Scan", "screens/SignUp"]  error.
         options={{
           tabBarIcon: ({ focused }) => (
             <Image
@@ -130,7 +131,7 @@ export default function Layout() {
         }}
       />
       <Tabs.Screen
-        name="user"
+        name="SignUp"  // user
         options={{
           tabBarIcon: ({ focused }) => (
             <Image
