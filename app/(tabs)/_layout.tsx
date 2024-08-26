@@ -97,7 +97,7 @@ export default function Layout() {
       }}
     >
       <Tabs.Screen
-        name= "screens/Home"  // home
+        name= "index"  // home
         options={{
           tabBarIcon: ({ focused }) => (
             <Image
