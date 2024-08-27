@@ -1,346 +1,191 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
-    View,
-    Text,
-    TouchableOpacity,
-    StatusBar,
-    TouchableWithoutFeedback,
-    Image,
-    FlatList,
-    KeyboardAvoidingView,
-    ScrollView,
-    Platform,
-    TextInput,
-    Modal,
-    GestureResponderEvent
+  View,
+  Text,
+  TouchableOpacity,
+  TextInput,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
+  Alert,
 } from "react-native";
-import { COLORS, SIZES, FONTS, icons, images } from "../../../constants";
-import LinearGradient from "react-native-linear-gradient";
+import * as LocalAuthentication from "expo-local-authentication";
+import { useRouter } from "expo-router";
+import { COLORS, SIZES, FONTS } from "../../../constants";
 
-// 타입 선언
-type Area = {
-    code: string;
-    name: string;
-    callingCode: string;
-    flag: string;
-};
+const SignUp = () => {
+  const [did, setDid] = useState("");
+  const [email, setEmail] = useState("");
+  const [isBiometricSupported, setIsBiometricSupported] = useState(false);
+  const router = useRouter();
 
-type SignUpProps = {
-    navigation: any;
-};
+  const checkBiometricSupport = async () => {
+    const compatible = await LocalAuthentication.hasHardwareAsync();
+    setIsBiometricSupported(compatible);
+  };
 
-const SignUp: React.FC<SignUpProps> = ({ navigation }) => {
-    const [showPassword, setShowPassword] = useState<boolean>(false);
-    const [areas, setAreas] = useState<Area[]>([]);
-    const [selectedArea, setSelectedArea] = useState<Area | null>(null);
-    const [modalVisible, setModalVisible] = useState<boolean>(false);
+  const handleBiometricAuth = async () => {
+    const result = await LocalAuthentication.authenticateAsync({
+      promptMessage: "Log in using biometrics",
+    });
 
-    useEffect(() => {
-        fetch("https://restcountries.com/v3.1/all")
-            .then((response) => response.json())
-            .then((data) => {
-                const areaData: Area[] = data.map((item: any) => {
-                    return {
-                        code: item.cca2, // alpha2Code 대신 cca2 사용
-                        name: item.name.common, // name.common을 사용해 국가 이름을 가져옴
-                        callingCode: `+${item.idd.root}${item.idd.suffixes[0] || ''}`, // callingCodes 대체
-                        flag: `https://flagsapi.com/${item.cca2}/flat/64.png`
-                    };
-                });
-
-                setAreas(areaData);
-
-                if (areaData.length > 0) {
-                    const defaultData = areaData.filter((a) => a.code === "IN");
-
-                    if (defaultData.length > 0) {
-                        setSelectedArea(defaultData[0]);
-                    }
-                }
-            });
-    }, []);
-
-    function renderHeader() {
-        return (
-            <TouchableOpacity
-                style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    marginTop: SIZES.padding * 2,
-                }}
-                onPress={() => navigation.goBack()}
-            >
-                <Image
-                    source={icons.back}
-                    resizeMode="contain"
-                    style={{
-                        width: 20,
-                        height: 20,
-                        tintColor: COLORS.white,
-                        marginLeft: 10,
-                    }}
-                />
-                <Text
-                    style={{
-                        marginLeft: SIZES.padding * 1.5,
-                        color: COLORS.white,
-                        ...FONTS.h4,
-                    }}
-                >
-                    Sign Up
-                </Text>
-            </TouchableOpacity>
-        );
+    if (result.success) {
+      Alert.alert("Biometric Idetification Success", "Authentication has been completed successfully.");
+    } else {
+      Alert.alert("Biometrics Identification Failure", "Authentication failed.");
     }
+  };
 
-    function renderLogo() {
-        return (
-            <View
-                style={{
-                    marginTop: SIZES.padding * 5,
-                    height: 100,
-                    alignItems: "center",
-                    justifyContent: "center",
-                }}
-            >
-                <Image
-                    source={images.wallieLogo}
-                    resizeMode="contain"
-                    style={{
-                        width: "60%",
-                    }}
-                />
-            </View>
-        );
-    }
+  React.useEffect(() => {
+    checkBiometricSupport();
+  }, []);
 
-    function renderForm() {
-        return (
-            <View
-                style={{
-                    marginTop: SIZES.padding * 3,
-                    marginHorizontal: SIZES.padding * 3,
-                }}
-            >
-                {/* Full Name */}
-                <View style={{ marginTop: SIZES.padding * 3 }}>
-                    <Text style={{ color: COLORS.lightGreen, ...FONTS.body3 }}>
-                        Full Name
-                    </Text>
-                    <TextInput
-                        style={{
-                            marginTop: SIZES.padding,
-                            borderBottomColor: COLORS.white,
-                            borderBottomWidth: 1,
-                            height: 40,
-                            color: COLORS.white,
-                            ...FONTS.body3,
-                        }}
-                        placeholder="Enter Full Name"
-                        placeholderTextColor={COLORS.white}
-                        selectionColor={COLORS.white}
-                    />
-                </View>
-
-                {/* Phone Number */}
-                <View style={{ marginTop: SIZES.padding * 3 }}>
-                    <Text style={{ color: COLORS.lightGreen, ...FONTS.body3 }}>
-                        Phone Number
-                    </Text>
-                    <View style={{ flexDirection: "row" }}>
-                        <TouchableOpacity
-                            style={{
-                                width: 100,
-                                height: 50,
-                                marginHorizontal: 5,
-                                borderBottomColor: COLORS.white,
-                                borderBottomWidth: 1,
-                                flexDirection: "row",
-                                ...FONTS.body2,
-                            }}
-                            onPress={() => setModalVisible(true)}
-                        >
-                            <View style={{ justifyContent: "center" }}>
-                                <Image
-                                    source={icons.down}
-                                    style={{
-                                        width: 10,
-                                        height: 10,
-                                        tintColor: COLORS.white,
-                                    }}
-                                />
-                            </View>
-                            <View style={{ justifyContent: "center", marginLeft: 5 }}>
-                                {selectedArea && (
-                                    <Image
-                                        source={{ uri: selectedArea.flag }}
-                                        resizeMode="contain"
-                                        style={{
-                                            width: 30,
-                                            height: 30,
-                                        }}
-                                    />
-                                )}
-                            </View>
-                            <View style={{ justifyContent: "center", marginLeft: 5 }}>
-                                <Text style={{ color: COLORS.white, ...FONTS.body3 }}>
-                                    {selectedArea ? `${selectedArea.code} ${selectedArea.callingCode}` : "Select"}
-                                </Text>
-                            </View>
-                        </TouchableOpacity>
-
-                        {/* Phone number */}
-                        <TextInput
-                            style={{
-                                flex: 1,
-                                marginVertical: SIZES.padding,
-                                borderBottomColor: COLORS.white,
-                                borderBottomWidth: 1,
-                                height: 40,
-                                color: COLORS.white,
-                                ...FONTS.body3,
-                            }}
-                            placeholder="Enter Phone Number"
-                            placeholderTextColor={COLORS.white}
-                            selectionColor={COLORS.white}
-                        />
-                    </View>
-                </View>
-
-                {/* Password */}
-                <View style={{ marginTop: SIZES.padding * 3 }}>
-                    <Text style={{ color: COLORS.lightGreen, ...FONTS.body3 }}>
-                        Password
-                    </Text>
-                    <TextInput
-                        style={{
-                            marginVertical: SIZES.padding,
-                            borderBottomColor: COLORS.white,
-                            borderBottomWidth: 1,
-                            height: 40,
-                            color: COLORS.white,
-                            ...FONTS.body3,
-                        }}
-                        placeholder="Enter Password"
-                        placeholderTextColor={COLORS.white}
-                        selectionColor={COLORS.white}
-                        secureTextEntry={!showPassword}
-                    />
-                    <TouchableOpacity
-                        style={{
-                            position: "absolute",
-                            right: 0,
-                            bottom: 10,
-                            height: 30,
-                            width: 30,
-                        }}
-                        onPress={() => setShowPassword(!showPassword)}
-                    >
-                        <Image
-                            source={showPassword ? icons.disable_eye : icons.eye}
-                            style={{
-                                height: 20,
-                                width: 20,
-                                tintColor: COLORS.white,
-                            }}
-                        />
-                    </TouchableOpacity>
-                </View>
-            </View>
-        );
-    }
-
-    function renderButton() {
-        return (
-            <View style={{ margin: SIZES.padding * 3 }}>
-                <TouchableOpacity
-                    style={{
-                        height: 60,
-                        backgroundColor: COLORS.black,
-                        borderRadius: SIZES.radius / 1.5,
-                        alignItems: "center",
-                        justifyContent: "center",
-                    }}
-                    onPress={() => navigation.navigate("Home")}
-                >
-                    <Text style={{ color: COLORS.white, ...FONTS.h3 }}>Continue</Text>
-                </TouchableOpacity>
-            </View>
-        );
-    }
-
-    function renderAreaCodeModal() {
-        const renderItem = ({ item }: { item: Area }) => {
-            return (
-                <TouchableOpacity
-                    style={{ padding: SIZES.padding, flexDirection: "row" }}
-                    onPress={() => {
-                        setSelectedArea(item);
-                        setModalVisible(false);
-                    }}
-                >
-                    <Image
-                        source={{ uri: item.flag }}
-                        style={{
-                            width: 30,
-                            height: 30,
-                            marginRight: 10,
-                        }}
-                    />
-                    <Text style={{ ...FONTS.body4 }}>{item.name}</Text>
-                </TouchableOpacity>
-            );
-        };
-
-        return (
-            <Modal animationType="slide" transparent={true} visible={modalVisible}>
-                <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
-                    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-                        <View
-                            style={{
-                                height: 400,
-                                width: SIZES.width * 0.8,
-                                backgroundColor: COLORS.lightGreen,
-                                borderRadius: SIZES.radius,
-                            }}
-                        >
-                            <FlatList
-                                data={areas}
-                                renderItem={renderItem}
-                                keyExtractor={(item) => item.code}
-                                showsVerticalScrollIndicator={false}
-                                style={{
-                                    padding: SIZES.padding * 2,
-                                    marginBottom: SIZES.padding * 2,
-                                }}
-                            />
-                        </View>
-                    </View>
-                </TouchableWithoutFeedback>
-            </Modal>
-        );
-    }
+  function renderHeader() {
     return (
-      <KeyboardAvoidingView
-          behavior={Platform.OS === "ios" ? "padding" : undefined}
-          style={{ flex: 1 }}
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          marginTop: SIZES.padding * 2,
+          paddingHorizontal: SIZES.padding * 2,
+        }}
       >
-          <LinearGradient
-              colors={[COLORS.lime, COLORS.emerald]}
-              style={{ flex: 1 }}
-          >
-              <ScrollView>
-                  {renderHeader()}
-                  {renderLogo()}
-                  {renderForm()}
-                  {renderButton()}
-
-              </ScrollView>
-
-          </LinearGradient>
-          {renderAreaCodeModal()}
-      </KeyboardAvoidingView>
+        <Text style={{ color: COLORS.white, ...FONTS.h2 }}>Sign Up</Text>
+      </View>
     );
+  }
+
+  function renderLogo() {
+    return (
+      <View
+        style={{
+          marginTop: SIZES.padding * 5,
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Text style={{ fontSize: 60 }}>🥔</Text>
+        <Text style={{ color: COLORS.white, ...FONTS.h1 }}>Hashbrown</Text>
+        <Text style={{ color: COLORS.white, ...FONTS.h2}}>Sign up</Text>
+      </View>
+    );
+  }
+
+  function renderForm() {
+    return (
+      <View style={{ marginTop: SIZES.padding * 3, marginHorizontal: SIZES.padding * 3 }}>
+        {/* Email */}
+        <View style={{ marginTop: SIZES.padding * 2 }}>
+          <Text style={{ color: COLORS.white, ...FONTS.body3 }}>Email</Text>
+          <TextInput
+            style={{
+              marginTop: SIZES.padding,
+              borderBottomColor: COLORS.white,
+              borderBottomWidth: 1,
+              height: 40,
+              color: COLORS.white,
+              ...FONTS.body3,
+            }}
+            placeholder="Enter Email"
+            placeholderTextColor={COLORS.white}
+            selectionColor={COLORS.white}
+            value={email}
+            onChangeText={setEmail}
+            keyboardType="email-address"
+          />
+          {/* DID Key */}
+        <View style={{ marginTop: SIZES.padding * 2 }}>
+          <Text style={{ color: COLORS.white, ...FONTS.body3 }}>DID Key</Text>
+          <TextInput
+            style={{
+              marginTop: SIZES.padding,
+              borderBottomColor: COLORS.white,
+              borderBottomWidth: 1,
+              height: 40,
+              color: COLORS.white,
+              ...FONTS.body3,
+            }}
+            placeholder="Enter DID Key"
+            placeholderTextColor={COLORS.white}
+            selectionColor={COLORS.white}
+            value={did}
+            onChangeText={setDid}
+          />
+        </View>
+        </View>
+
+        {/* Biometric Authentication */}
+        {isBiometricSupported && (
+          <TouchableOpacity
+            style={{
+              marginTop: SIZES.padding * 3,
+              height: 50,
+              backgroundColor: COLORS.orange,
+              borderRadius: SIZES.radius / 1.5,
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+            onPress={handleBiometricAuth}
+          >
+            <Text style={{ color: COLORS.white, ...FONTS.h3 }}>Use Biometric Authentication</Text>
+          </TouchableOpacity>
+        )}
+      </View>
+    );
+  }
+
+  function renderButton() {
+    return (
+      <View style={{ margin: SIZES.padding * 3 }}>
+        <TouchableOpacity
+          style={{
+            height: 60,
+            backgroundColor: COLORS.orange,
+            borderRadius: SIZES.radius / 1.5,
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+          onPress={() => router.push("../index")}
+        >
+          <Text style={{ color: COLORS.white, ...FONTS.h3 }}>Continue</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
+
+  return (
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : undefined}
+      style={{ flex: 1 }}
+    >
+      <View style={{ flex: 1 }}>
+        {/* 단순한 그라디언트 효과를 위한 겹치는 View */}
+        <View
+          style={{
+            position: "absolute",
+            width: "100%",
+            height: "100%",
+            backgroundColor: COLORS.mustard,
+          }}
+        />
+        <View
+          style={{
+            position: "absolute",
+            width: "100%",
+            height: "100%",
+            backgroundColor: COLORS.mustard,
+            opacity: 0.7, // 투명도를 사용해 그라디언트 느낌
+          }}
+        />
+        <ScrollView>
+          {renderHeader()}
+          {renderLogo()}
+          {renderForm()}
+          {renderButton()}
+        </ScrollView>
+      </View>
+    </KeyboardAvoidingView>
+  );
 };
 
 export default SignUp;

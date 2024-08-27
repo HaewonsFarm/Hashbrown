@@ -106,7 +106,7 @@ export default function Layout() {
               style={{
                 width: 25,
                 height: 25,
-                tintColor: focused ? COLORS.white : COLORS.secondary,
+                tintColor: focused ? COLORS.white : COLORS.orange,
               }}
             />
           ),
@@ -123,7 +123,7 @@ export default function Layout() {
               style={{
                 width: 25,
                 height: 25,
-                tintColor: focused ? COLORS.white : COLORS.secondary,
+                tintColor: focused ? COLORS.white : COLORS.orange,
               }}
             />
           ),
@@ -140,7 +140,7 @@ export default function Layout() {
               style={{
                 width: 25,
                 height: 25,
-                tintColor: focused ? COLORS.white : COLORS.secondary,
+                tintColor: focused ? COLORS.white : COLORS.orange,
               }}
             />
           ),
@@ -153,7 +153,7 @@ export default function Layout() {
 
 const styles = StyleSheet.create({
   shadow: {
-    shadowColor: COLORS.primary,
+    shadowColor: COLORS.orange,
     shadowOffset: {
       width: 0,
       height: 10,
