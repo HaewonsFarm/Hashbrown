@@ -22,23 +22,23 @@ This project is a mobile application that leverages blockchain technology and ha
 ## Installation
 To set up this project locally, follow these steps:
 
-Clone the repository:
+### Clone the repository:
 
 ```sh
 git clone https://github.com/HaewonsFarm/Hashbrown.git
-Navigate to the project directory:
 ```
 
+### Navigate to the project directory:
 ```sh
 cd HaewonsFarm
-Install the required dependencies:
 ```
 
+### Install the required dependencies:
 ```sh
 npm install
-Start the development server:
 ```
 
+### Start the development server:
 ```sh
 npm run android
 ```
