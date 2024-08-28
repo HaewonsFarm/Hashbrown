@@ -43,7 +43,7 @@ export const SIZES = {
     padding2: 12,
 
     // font sizes
-    largeTitle: 50,
+    largeTitle: 45,
     h1: 30,
     h2: 22,
     h3: 20,

@@ -9,7 +9,6 @@ import {
 } from "react-native";
 import { Tabs } from "expo-router";
 import Svg, { Path } from "react-native-svg";
-import { isIphoneX } from "react-native-iphone-x-helper";
 import { COLORS, icons } from "../../constants";
 
 
