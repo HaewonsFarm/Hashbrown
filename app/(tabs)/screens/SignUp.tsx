@@ -28,17 +28,19 @@ const SignUp = () => {
       setIsBiometricSupported(result.result);
   };
 
-  //update - back 
+  //update - back
   const handleBiometricAuth = async () => {
     const result = await LocalAuthentication.authenticateAsync({
       promptMessage: "Log in using biometrics",
     });
 
     if (result.success) {
-      Alert.alert("Biometric Idetification Success", "Authentication has been completed successfully.");
+      Alert.alert("Biometric Identification Success", "Authentication has been completed successfully.");
     } else {
       Alert.alert("Biometrics Identification Failure", "Authentication failed.");
-    }const biometricsCheck = await authentication.booleanBiometricsCheck();
+    }
+
+    const biometricsCheck = await authentication.booleanBiometricsCheck();
     if (biometricsCheck?.result) {
       const bioKey = await authentication.biometricsLogin(did);
       if (bioKey?.result) {
@@ -109,47 +111,45 @@ const SignUp = () => {
             keyboardType="email-address"
           />
           {/* DID Key */}
-        <View style={{ marginTop: SIZES.padding * 2 }}>
-          <Text style={{ color: COLORS.white, ...FONTS.body3 }}>DID Key</Text>
-          <TextInput
-            style={{
-              marginTop: SIZES.padding,
-              borderBottomColor: COLORS.white,
-              borderBottomWidth: 1,
-              height: 40,
-              color: COLORS.white,
-              ...FONTS.body3,
-            }}
-            placeholder="Enter password"
-            placeholderTextColor={COLORS.white}
-            selectionColor={COLORS.white}
-            value={did}
-            onChangeText={setDid}
-          />
-        </View>
+          <View style={{ marginTop: SIZES.padding * 2 }}>
+            <Text style={{ color: COLORS.white, ...FONTS.body3 }}>DID Key</Text>
+            <TextInput
+              style={{
+                marginTop: SIZES.padding,
+                borderBottomColor: COLORS.white,
+                borderBottomWidth: 1,
+                height: 40,
+                color: COLORS.white,
+                ...FONTS.body3,
+              }}
+              placeholder="Enter DID Key"
+              placeholderTextColor={COLORS.white}
+              selectionColor={COLORS.white}
+              value={did}
+              onChangeText={setDid}
+            />
+          </View>
         </View>
 
         {/* Biometric Authentication */}
-        {isBiometricSupported && (
-          <TouchableOpacity
-            style={{
-              marginTop: SIZES.padding * 3,
-              height: 50,
-              backgroundColor: COLORS.orange,
-              borderRadius: SIZES.radius / 1.5,
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-            onPress={handleBiometricAuth}
-          >
-            <Text style={{ color: COLORS.white, ...FONTS.h3 }}>Use Biometric Authentication</Text>
-          </TouchableOpacity>
-        )}
+        <TouchableOpacity
+          style={{
+            marginTop: SIZES.padding * 3,
+            height: 50,
+            backgroundColor: COLORS.orange,
+            borderRadius: SIZES.radius / 1.5,
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+          onPress={handleBiometricAuth}
+        >
+          <Text style={{ color: COLORS.white, ...FONTS.h3 }}>Use Biometric Authentication</Text>
+        </TouchableOpacity>
       </View>
     );
   }
 
-  function renderButton() {
+  function renderSignUpButton() {
     return (
       <View style={{ margin: SIZES.padding * 3 }}>
         <TouchableOpacity
@@ -174,7 +174,7 @@ const SignUp = () => {
       style={{ flex: 1 }}
     >
       <View style={{ flex: 1 }}>
-        {/* 단순한 그라디언트 효과를 위한 겹치는 View */}
+        {/* Background Views */}
         <View
           style={{
             position: "absolute",
@@ -189,14 +189,14 @@ const SignUp = () => {
             width: "100%",
             height: "100%",
             backgroundColor: COLORS.mustard,
-            opacity: 0.7, // 투명도를 사용해 그라디언트 느낌
+            opacity: 0.7,
           }}
         />
         <ScrollView>
           {renderHeader()}
           {renderLogo()}
           {renderForm()}
-          {renderButton()}
+          {renderSignUpButton()}
         </ScrollView>
       </View>
     </KeyboardAvoidingView>
