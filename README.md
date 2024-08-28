@@ -25,12 +25,12 @@ To set up this project locally, follow these steps:
 Clone the repository:
 
 ```sh
-git clone https://github.com/your-username/your-repo-name.git
+git clone https://github.com/HaewonsFarm/Hashbrown.git
 Navigate to the project directory:
 ```
 
 ```sh
-cd your-repo-name
+cd HaewonsFarm
 Install the required dependencies:
 ```
 
