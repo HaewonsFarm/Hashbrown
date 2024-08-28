@@ -1,6 +1,6 @@
 import {Alert} from 'react-native';
 import messaging from '@react-native-firebase/messaging';
-import * as authentication from "../bioAuthentication";
+import * as authentication from "./bioAuthentication";
 
 function Home(props){
     registerBiometrics = async() => {

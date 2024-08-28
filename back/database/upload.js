@@ -48,4 +48,8 @@ router.post('/upload', upload.single('document'), (req, res) => {
   );
 });
 
+<<<<<<< HEAD
 module.exports = router;
+=======
+module.exports = router;
+>>>>>>> back

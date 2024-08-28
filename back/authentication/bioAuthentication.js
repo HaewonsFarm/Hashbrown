@@ -1,5 +1,5 @@
 import ReactNativeBiometrics, {BiometryTypes} from 'react-native-biometrics';
-import * as keyStore from '../secure-key-store';
+import * as keyStore from './secure-key-store';
 
 const rnBiometrics = new ReactNativeBiometrics();
 
