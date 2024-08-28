@@ -45,10 +45,10 @@ const Home: React.FC = () => {
     },
     {
       id: 3,
-      icon: icons.internet as ImageSourcePropType,
+      icon: icons.wallet as ImageSourcePropType,
       color: COLORS.primary,
       backgroundColor: COLORS.lightGreen,
-      description: "Internet"
+      description: "Wallet"
     },
     {
       id: 4,
