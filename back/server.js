@@ -2,10 +2,10 @@ const express=require('express');
 const database=require('./database/database');
 
 const app=express();
-const port=3001; // React의 포트 번호와 다르게 하기 위해?
+const port=3001; 
 
 app.get('/', (req, res) => {
-    database.query('SELECT * FROM table_name', function (err, results, fields) {
+    database.query('SELECT * FROM user', function (err, results, fields) {
         if (err) throw err;
         res.send(results);
     });

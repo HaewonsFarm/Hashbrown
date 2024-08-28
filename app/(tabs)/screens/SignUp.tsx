@@ -13,17 +13,22 @@ import * as LocalAuthentication from "expo-local-authentication";
 import { useRouter } from "expo-router";
 import { COLORS, SIZES, FONTS } from "../../../constants";
 
+// update - back
+import * as authentication from "../../../back/authentication/bioAuthentication"
+
 const SignUp = () => {
   const [did, setDid] = useState("");
   const [email, setEmail] = useState("");
   const [isBiometricSupported, setIsBiometricSupported] = useState(false);
   const router = useRouter();
 
+  //update - back
   const checkBiometricSupport = async () => {
-    const compatible = await LocalAuthentication.hasHardwareAsync();
-    setIsBiometricSupported(compatible);
+      const result=await authentication.booleanBiometricsCheck();
+      setIsBiometricSupported(result.result);
   };
 
+  //update - back 
   const handleBiometricAuth = async () => {
     const result = await LocalAuthentication.authenticateAsync({
       promptMessage: "Log in using biometrics",
@@ -33,6 +38,16 @@ const SignUp = () => {
       Alert.alert("Biometric Idetification Success", "Authentication has been completed successfully.");
     } else {
       Alert.alert("Biometrics Identification Failure", "Authentication failed.");
+    }const biometricsCheck = await authentication.booleanBiometricsCheck();
+    if (biometricsCheck?.result) {
+      const bioKey = await authentication.biometricsLogin(did);
+      if (bioKey?.result) {
+        Alert.alert("Biometric Identification Success", "Authentication has been completed successfully.");
+      } else {
+        Alert.alert("Biometrics Identification Failure", "Authentication failed.");
+      }
+    } else {
+      Alert.alert("Biometric Authentication Unavailable", "Your device does not support biometric authentication.");
     }
   };
 
@@ -105,7 +120,7 @@ const SignUp = () => {
               color: COLORS.white,
               ...FONTS.body3,
             }}
-            placeholder="Enter DID Key"
+            placeholder="Enter password"
             placeholderTextColor={COLORS.white}
             selectionColor={COLORS.white}
             value={did}
