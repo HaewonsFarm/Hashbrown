@@ -30,7 +30,7 @@ git clone https://github.com/HaewonsFarm/Hashbrown.git
 
 ### Navigate to the project directory:
 ```sh
-cd HaewonsFarm
+cd Hashbrown
 ```
 
 ### Install the required dependencies:
