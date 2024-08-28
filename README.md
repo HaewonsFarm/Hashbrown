@@ -1,52 +1,51 @@
-# Welcome to your Expo app 👋
+# Blockchain-based e-Wallet for Identity and Credential Management
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## Project Overview
 
-## Get started
+This project is a mobile application that leverages blockchain technology and hashing algorithms to securely manage user data within an e-Wallet. The app is designed to store and manage digital identity credentials and other forms of verifiable credentials, following the standards set by the W3C's DID (Decentralized Identifier) and VC (Verifiable Credentials) data models.
 
-1. Install dependencies
+### Development Focus: Blockchain-based e-Wallet for Identity and Credential Management
 
-   ```bash
-   npm install
-   npm install react-native-biometrics
-   npm install react-native-keychain
-   ```
+- **Identity Verification**: Confirm the identity of users in a decentralized manner.
+- **Credential Verification**: Ensure that users have the necessary credentials to access specific services.
+- **Identity Documents**: Adheres to W3C's DID and VC standards for decentralized identity and verifiable credentials.
+   - Understanding DID by W3C (Korean)
+   - DID Technical Information
+  
+## Used Tools and languages
+- React Native & Expo
+- MySQL
+- Infura (Ethereum blockchain)
+- TypeScript, JavaScript
+- Solidity: For writing smart contracts that manage identity and credential verification on the blockchain.
 
-2. Start the app
+## Installation
+To set up this project locally, follow these steps:
 
-   ```bash
-    npx expo start
-   ```
+Clone the repository:
 
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```sh
+git clone https://github.com/your-username/your-repo-name.git
+Navigate to the project directory:
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+```sh
+cd your-repo-name
+Install the required dependencies:
+```
 
-## Learn more
+```sh
+npm install
+Start the development server:
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+```sh
+npm start
+```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## Usage
+### Identity and Credential Management
+- Identity Verification: Users can verify their identity through a secure, blockchain-based process that stores and manages decentralized identifiers (DIDs).
+- Credential Verification: The app enables users to store and present verifiable credentials (VCs) for access to various services.
+### Blockchain Integration
+The application integrates with the Ethereum blockchain via Infura to manage DIDs and VCs, ensuring that all operations are secure, transparent, and decentralized.
