@@ -45,7 +45,7 @@ const AddDocument: React.FC = () => {
       });
 
       if (response.status === 200) {
-        router.push("/screens/documentViewer");
+        router.push("/documentViewer");
       } else {
         console.log("Upload failed");
       }

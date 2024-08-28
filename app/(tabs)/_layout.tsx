@@ -11,6 +11,7 @@ import { Tabs } from "expo-router";
 import Svg, { Path } from "react-native-svg";
 import { COLORS, icons } from "../../constants";
 
+
 // 커스텀버튼 타입 선언
 type TabBarCustomButtonProps = {
   children: React.ReactNode;
@@ -95,11 +96,28 @@ export default function Layout() {
       }}
     >
       <Tabs.Screen
-        name="index"  // home
+        name= "index"  // home
         options={{
           tabBarIcon: ({ focused }) => (
             <Image
               source={icons.more}
+              resizeMode="contain"
+              style={{
+                width: 25,
+                height: 25,
+                tintColor: focused ? COLORS.white : COLORS.orange,
+              }}
+            />
+          ),
+          tabBarButton: (props) => <TabBarCustomButton {...props} />,
+        }}
+      />
+      <Tabs.Screen
+        name="screens/Scan"
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <Image
+              source={icons.scan}
               resizeMode="contain"
               style={{
                 width: 25,
