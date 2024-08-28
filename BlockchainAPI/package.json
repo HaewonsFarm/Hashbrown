@@ -1,5 +1,5 @@
 {
-  "name": "mysolidityproject",
+  "name": "BlockchainAPI",
   "version": "1.0.0",
   "main": "truffle-config.js",
   "directories": {
