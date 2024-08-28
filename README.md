@@ -40,7 +40,7 @@ Start the development server:
 ```
 
 ```sh
-npm start
+npm run android
 ```
 
 ## Usage
