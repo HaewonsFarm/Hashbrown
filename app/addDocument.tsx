@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import {
   View,
   Text,
-  TextInput,
   Button,
   StyleSheet,
   TouchableOpacity,
@@ -55,6 +54,10 @@ const AddDocument: React.FC = () => {
     }
   };
 
+  const handleScan = () => {
+    router.push("./Scan");
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Upload Document</Text>
@@ -64,6 +67,9 @@ const AddDocument: React.FC = () => {
         </Text>
       </TouchableOpacity>
       <Button title="Upload" onPress={handleUpload} disabled={!selectedDocument} />
+      <TouchableOpacity style={styles.scanButton} onPress={handleScan}>
+        <Text style={styles.buttonText}>Scan</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -88,6 +94,13 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "white",
     fontSize: 16,
+  },
+  scanButton: {
+    marginTop: 20,
+    padding: 15,
+    backgroundColor: "#28a745",
+    borderRadius: 5,
+    alignItems: "center",
   },
 });
 

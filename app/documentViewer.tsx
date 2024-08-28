@@ -8,7 +8,7 @@ import {
   StatusBar,
 } from "react-native";
 import { useRouter } from "expo-router";
-import { COLORS, SIZES, FONTS } from "../../../constants";
+import { COLORS, SIZES, FONTS } from "../constants";
 
 type Document = {
   id: number;

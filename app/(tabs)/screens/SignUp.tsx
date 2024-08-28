@@ -112,7 +112,7 @@ const SignUp = () => {
           />
           {/* DID Key */}
           <View style={{ marginTop: SIZES.padding * 2 }}>
-            <Text style={{ color: COLORS.white, ...FONTS.body3 }}>DID Key</Text>
+            <Text style={{ color: COLORS.white, ...FONTS.body3 }}>Password</Text>
             <TextInput
               style={{
                 marginTop: SIZES.padding,
@@ -122,7 +122,7 @@ const SignUp = () => {
                 color: COLORS.white,
                 ...FONTS.body3,
               }}
-              placeholder="Enter DID Key"
+              placeholder="Enter Password"
               placeholderTextColor={COLORS.white}
               selectionColor={COLORS.white}
               value={did}

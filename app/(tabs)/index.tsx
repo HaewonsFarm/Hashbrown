@@ -5,12 +5,11 @@ import {
   SafeAreaView,
   Image,
   TouchableOpacity,
-  FlatList,
   StatusBar,
-  ActivityIndicator,
   ImageSourcePropType
 } from "react-native";
-import { COLORS, SIZES, icons, images, FONTS } from "../../constants";
+import { COLORS, SIZES, icons, FONTS } from "../../constants";
+import { useRouter, useLocalSearchParams } from "expo-router";
 
 type Feature = {
   id: number;
@@ -20,80 +19,48 @@ type Feature = {
   description: string;
 };
 
-type Promo = {
-  id: number;
-  img: ImageSourcePropType;
-  title: string;
-  description: string;
-};
-
 const Home: React.FC = () => {
+  const router = useRouter();
+  const { authenticated } = useLocalSearchParams(); // Fetch query parameters
+
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(authenticated === "true");
+
   const [features, setFeatures] = useState<Feature[]>([
     {
       id: 1,
       icon: icons.reload as ImageSourcePropType,
       color: COLORS.purple,
       backgroundColor: COLORS.lightpurple,
-      description: "Top Up"
+      description: isAuthenticated ? "Authenticated User" : "User Authentication"
     },
     {
       id: 2,
-      icon: icons.send as ImageSourcePropType,
-      color: COLORS.yellow,
-      backgroundColor: COLORS.lightyellow,
-      description: "Transfer"
-    },
-    {
-      id: 3,
-      icon: icons.internet as ImageSourcePropType,
+      icon: icons.bill as ImageSourcePropType,
       color: COLORS.primary,
       backgroundColor: COLORS.lightGreen,
-      description: "Internet"
-    },
-    {
-      id: 4,
-      icon: icons.bill as ImageSourcePropType,
-      color: COLORS.white,
-      backgroundColor: COLORS.primary,
-      description: "Bill"
+      description: "View Documents"
     },
   ]);
 
-  const [specialPromos, setSpecialPromos] = useState<Promo[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [notificationCount, setNotificationCount] = useState<number>(3);
-
   useEffect(() => {
-    setTimeout(() => {
-      setSpecialPromos([
-        {
-          id: 1,
-          img: images.promoBanner as ImageSourcePropType,
-          title: "Bonus Cashback1",
-          description: "Don't miss it. Grab it now!"
-        },
-        {
-          id: 2,
-          img: images.promoBanner as ImageSourcePropType,
-          title: "Bonus Cashback2",
-          description: "Don't miss it. Grab it now!"
-        },
-        {
-          id: 3,
-          img: images.promoBanner as ImageSourcePropType,
-          title: "Bonus Cashback3",
-          description: "Don't miss it. Grab it now!"
-        },
-        {
-          id: 4,
-          img: images.promoBanner as ImageSourcePropType,
-          title: "Bonus Cashback4",
-          description: "Don't miss it. Grab it now!"
-        },
-      ]);
-      setLoading(false);
-    }, 1500);
-  }, []);
+    setFeatures(prevFeatures => prevFeatures.map(feature =>
+      feature.id === 1
+        ? { ...feature, description: isAuthenticated ? "Authenticated User" : "User Authentication" }
+        : feature
+    ));
+  }, [isAuthenticated]);
+
+  const handleFeaturePress = (description: string) => {
+    if (description === "User Authentication" && !isAuthenticated) {
+      router.push("./screens/SignUp");
+    } else if (description === "View Documents") {
+      router.push("../documentViewer");
+    } else {
+      console.log(description);
+    }
+  };
+
+  const [notificationCount, setNotificationCount] = useState<number>(3);
 
   function renderHeader() {
     return (
@@ -130,8 +97,8 @@ const Home: React.FC = () => {
                 justifyContent: 'center',
                 alignItems: 'center'
               }}>
-                <Text style={{ 
-                  color: COLORS.white, 
+                <Text style={{
+                  color: COLORS.white,
                   ...FONTS.body5,
                   lineHeight: 15,
                   textAlign: 'center',
@@ -145,152 +112,57 @@ const Home: React.FC = () => {
   }
 
   function renderFeatures() {
-    const Header = () => (
-      <View style={{ marginBottom: SIZES.padding * 2 }}>
-        <Text style={{ ...FONTS.h2, color: COLORS.black }}>My wallet</Text>
-      </View>
-    );
-
-    const renderItem = ({ item }: { item: Feature }) => (
-      <TouchableOpacity style={{
-        marginBottom: SIZES.padding * 3, width: 50, alignItems: 'center'
-      }}
-        onPress={() => console.log(item.description)}
-      >
-        <View style={{
-          height: 40,
-          width: 40,
-          marginBottom: 5,
-          borderRadius: 20,
-          backgroundColor: item.backgroundColor,
-          alignItems: 'center',
-          justifyContent: 'center'
-        }}>
-          <Image
-            source={item.icon}
-            resizeMode="contain"
-            style={{
-              height: 25,
-              width: 25,
-              tintColor: item.color,
-              margin: 8
-            }}
-          />
-        </View>
-        <Text style={{
-          flexWrap: 'wrap', textAlign: 'center', ...FONTS.body5, color: COLORS.black
-        }}>{item.description}</Text>
-      </TouchableOpacity>
-    );
-
     return (
-      <FlatList
-        ListHeaderComponent={Header}
-        data={features}
-        numColumns={4}
-        columnWrapperStyle={{ justifyContent: 'space-between' }}
-        keyExtractor={item => `${item.id}`}
-        renderItem={renderItem}
-        style={{
-          marginTop: SIZES.padding * 2
-        }}
-      />
+      <View style={{ marginTop: SIZES.padding * 2 }}>
+        <Text style={{ ...FONTS.h2, color: COLORS.black, marginBottom: SIZES.padding * 2 }}>My Wallet</Text>
+        {features.map((item) => (
+          <TouchableOpacity key={item.id} style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginBottom: SIZES.padding * 3,
+          }}
+            onPress={() => handleFeaturePress(item.description)}
+          >
+            <View style={{
+              height: 50,
+              width: 50,
+              borderRadius: 25,
+              backgroundColor: item.backgroundColor,
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginRight: SIZES.padding,
+            }}>
+              <Image
+                source={item.icon}
+                resizeMode="contain"
+                style={{
+                  height: 25,
+                  width: 25,
+                  tintColor: item.color,
+                }}
+              />
+            </View>
+            <Text style={{
+              flex: 1,
+              ...FONTS.body4,
+              color: COLORS.black
+            }}>{item.description}</Text>
+          </TouchableOpacity>
+        ))}
+      </View>
     );
   }
 
-  function renderPromos() {
-    const HeaderComponent = () => (
-      <View>
-        {renderHeader()}
-        {renderFeatures()}
-        {renderPromoHeader()}
-      </View>
-    );
-
-    const renderPromoHeader = () => (
-      <View style={{
-        flexDirection: 'row',
-        marginBottom: SIZES.padding
-      }}>
-        <View style={{ flex: 1 }}>
-          <Text style={{ ...FONTS.h2, color: COLORS.black }}>Promotions</Text>
-        </View>
-        <TouchableOpacity onPress={() => console.log("View All")}>
-          <Text style={{ color: COLORS.gray, ...FONTS.body4 }}>View All</Text>
-        </TouchableOpacity>
-      </View>
-    );
-
-    const renderItem = ({ item }: { item: Promo }) => (
-      <TouchableOpacity style={{
-        marginVertical: SIZES.base,
-        width: SIZES.width / 2.5
-      }}
-        onPress={() => console.log(item.title)}
-      >
-        <View style={{
-          height: 80,
-          borderTopLeftRadius: 20,
-          borderTopRightRadius: 20,
-          backgroundColor: COLORS.primary
-        }}>
-          <Image
-            source={item.img}
-            resizeMode="cover"
-            style={{
-              width: '100%',
-              height: '100%',
-              borderTopRightRadius: 20,
-              borderTopLeftRadius: 20
-            }}
-          />
-        </View>
-        <View style={{
-          padding: SIZES.padding,
-          backgroundColor: COLORS.lightGray,
-          borderBottomLeftRadius: 20,
-          borderBottomRightRadius: 20
-        }}>
-          <Text style={{ ...FONTS.h4, color: COLORS.black }}>{item.title}</Text>
-          <Text style={{ ...FONTS.body4, color: COLORS.black }}>{item.description}</Text>
-        </View>
-      </TouchableOpacity>
-    );
-
-    if (loading) {
-      return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <ActivityIndicator size="large" color={COLORS.primary} />
-        </View>
-      );
-    }
-
-    return (
-      <FlatList
-        ListHeaderComponent={HeaderComponent}
-        contentContainerStyle={{ paddingHorizontal: SIZES.padding * 3 }}
-        numColumns={2}
-        columnWrapperStyle={{ justifyContent: 'space-between' }}
-        data={specialPromos}
-        keyExtractor={item => `${item.id}`}
-        renderItem={renderItem}
-        showsVerticalScrollIndicator={false}
-        ListFooterComponent={
-          <View style={{ marginBottom: 80 }}></View>
-        }
+  return (
+    <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white, paddingHorizontal: SIZES.padding * 2 }}>
+      {renderHeader()}
+      {renderFeatures()}
+      <StatusBar
+        backgroundColor="white"
+        barStyle="dark-content"
       />
-    );
-  }
-
-    return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
-            {renderPromos()}
-            <StatusBar
-                backgroundColor="white"
-                barStyle="dark-content"
-            />
-        </SafeAreaView>
-    );
+    </SafeAreaView>
+  );
 };
 
 export default Home;

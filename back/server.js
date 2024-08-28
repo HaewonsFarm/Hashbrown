@@ -14,3 +14,14 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
     console.log('Server is running on port ${port}');
 });
+
+router.get('/documents', (req, res) => {
+  connection.query('SELECT * FROM documents', (err, results) => {
+    if (err) {
+      console.log(err);
+      res.status(500).send('Error fetching documents');
+    } else {
+      res.status(200).json(results);
+    }
+  });
+});
